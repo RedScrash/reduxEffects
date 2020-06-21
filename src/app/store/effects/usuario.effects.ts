@@ -9,15 +9,15 @@ import {of} from 'rxjs';
 
 @Injectable()
 
-export class UsuariosEffects {
+export class UsuarioEffects {
     // Actions esta pendiente de las acciones
     constructor(private _actions$: Actions, private _usuariosService: UsuarioService) {}
 
-    public cargarUsuarios$ = createEffect( () => this._actions$.pipe(
-            ofType(actions.cargarUsuarios),
-            mergeMap( () => this._usuariosService.getUsers().pipe(
-                    map( users => actions.cargarUsuariosSuccess({usuarios: users})),
-                    catchError( err => of(actions.cargarUsuariosError({payload: err.error})))
+    public cargarUsuario$ = createEffect( () => this._actions$.pipe(
+            ofType(actions.cargarUsuario),
+            mergeMap( (action) => this._usuariosService.getUser(action.idUser).pipe(
+                    map( user => actions.cargarUsuarioSuccess({usuario: user})),
+                    catchError( err => of(actions.cargarUsuarioError({payload: err.error})))
                 )
             )
         )
